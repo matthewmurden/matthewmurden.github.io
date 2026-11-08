@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matthew Murden</title>
+<meta name="description" content="Matthew Murden: Computer Science at the University of Birmingham, Intern Firmware Engineer at Honeywell. Trading systems, market-data pipelines, test automation and iOS apps.">
+<meta property="og:title" content="Matthew Murden">
+<meta property="og:description" content="CS @ Birmingham · Firmware @ Honeywell · Trading systems, market data and test automation.">
+<meta name="theme-color" content="#07090c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307090c'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='700' font-size='30' fill='%233ddc97'%3EMM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090c;--bg2:#0b0e13;--panel:#0d1117;--panel2:#111720;--line:#1c242e;--line2:#2a3440;
+  --text:#d9dfe6;--muted:#8b95a1;--dim:#5b6571;--white:#fff;
+  --green:#3ddc97;--green2:#2bb07a;--blue:#58a6ff;--amber:#e3b341;--red:#ff6b6b;--purple:#b392f0;
+  --mono:'JetBrains Mono','DejaVu Sans Mono',ui-monospace,Menlo,monospace;
+  --sans:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+  --r:14px;--max:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--green);color:#04130c}
+img{max-width:100%;display:block}
+
+/* ---------- background ---------- */
+.bg-grid{position:fixed;inset:0;z-index:-3;background-image:linear-gradient(#ffffff07 1px,transparent 1px),linear-gradient(90deg,#ffffff07 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 80%)}
+.bg-glow{position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(600px circle at var(--mx,50%) var(--my,20%),#3ddc9714,transparent 60%)}
+.bg-orb{position:fixed;z-index:-2;width:700px;height:700px;border-radius:50%;filter:blur(120px);opacity:.18;pointer-events:none}
+.bg-orb.o1{background:var(--green);top:-300px;right:-200px;animation:float 18s ease-in-out infinite}
+.bg-orb.o2{background:var(--blue);bottom:-400px;left:-300px;opacity:.10;animation:float 22s ease-in-out infinite reverse}
+@keyframes float{50%{transform:translate(-80px,60px)}}
+.noise{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- nav ---------- */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--green),var(--blue));z-index:60;box-shadow:0 0 12px var(--green)}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .3s,border-color .3s}
+nav.scrolled{background:#07090cd9;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--max);margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:13px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.links{display:flex;gap:28px;align-items:center}
+.links a{color:var(--muted);transition:color .2s}
+.links a:hover{color:var(--green)}
+.links a span{color:var(--dim)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;border:1px solid var(--line2);font-family:var(--mono);font-size:13.5px;color:var(--text);background:#0d111799;transition:all .2s;cursor:pointer}
+.btn:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px)}
+.btn.primary{background:var(--green);color:#04130c;border-color:var(--green);font-weight:700}
+.btn.primary:hover{box-shadow:0 8px 30px #3ddc9755;color:#04130c}
+.btn.sm{padding:8px 14px;font-size:12.5px}
+.burger{display:none;background:none;border:1px solid var(--line2);color:var(--text);border-radius:8px;padding:8px 10px;font-family:var(--mono);cursor:pointer}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+section{padding:110px 0;position:relative}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:52px}
+.sec-num{font-family:var(--mono);color:var(--green);font-size:14px}
+.sec-title{font-size:clamp(30px,4vw,44px);font-weight:700;letter-spacing:-1.5px;color:var(--white)}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent);align-self:center}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:110px;padding-bottom:120px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.me{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.avatar{position:relative;width:58px;height:58px;border-radius:50%;padding:2px;background:conic-gradient(var(--green),var(--blue),var(--green));animation:spin 6s linear infinite}
+.avatar img,.photo img{font-size:0;color:transparent}
+.avatar img,.avatar .mono{width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--panel);animation:spin 6s linear infinite reverse}
+.avatar .mono{display:grid;place-items:center;font-family:var(--mono);font-weight:700;color:var(--green)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--green);border:1px solid #3ddc9744;background:#3ddc970f;padding:6px 12px;border-radius:999px}
+.tag{font-family:var(--mono);font-size:14px;color:var(--green);margin-bottom:20px;min-height:22px}
+.tag .cur{display:inline-block;width:8px;height:16px;background:var(--green);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+h1{font-size:clamp(44px,6.2vw,78px);line-height:1.0;letter-spacing:-3px;font-weight:800;color:var(--white)}
+h1 .g{color:var(--green);position:relative;display:inline-block}
+h1 .g::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:10px;background:var(--green);opacity:.18;transform:scaleX(0);transform-origin:left;animation:under 1.2s .9s forwards cubic-bezier(.2,.8,.2,1)}
+@keyframes under{to{transform:scaleX(1)}}
+.lead{margin-top:28px;font-size:clamp(16px,1.6vw,19px);color:var(--muted);max-width:590px}
+.lead b{color:var(--text);font-weight:500}
+.cta{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+.socials{margin-top:34px;display:flex;gap:18px;font-family:var(--mono);font-size:13px}
+.socials a{color:var(--muted);display:inline-flex;gap:8px;align-items:center;transition:color .2s}
+.socials a:hover{color:var(--green)}
+.socials svg{width:16px;height:16px;fill:currentColor}
+
+.term{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);font-family:var(--mono);font-size:13px;overflow:hidden;box-shadow:0 30px 80px #00000080,0 0 0 1px #ffffff05;transform:perspective(1400px) rotateY(-6deg) rotateX(3deg);transition:transform .6s}
+.term:hover{transform:perspective(1400px) rotateY(0) rotateX(0)}
+.term-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);color:var(--dim);font-size:12px;background:var(--panel2)}
+.term-bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.term-bar i:nth-child(1){background:#ff5f57}.term-bar i:nth-child(2){background:#febc2e}.term-bar i:nth-child(3){background:#28c840}
+.term-bar span{margin-left:10px}
+.term-body{padding:20px 22px;min-height:330px;line-height:1.95;white-space:pre-wrap;color:var(--muted)}
+.t-g{color:var(--green)}.t-b{color:var(--blue)}.t-y{color:var(--amber)}.t-p{color:var(--purple)}.t-w{color:var(--white)}.t-r{color:var(--red)}
+.caret{display:inline-block;width:8px;height:15px;background:var(--green);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+.term-note{padding:10px 22px;border-top:1px solid var(--line);font-size:11px;color:var(--dim)}
+
+.scroll-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-hint i{width:1px;height:40px;background:linear-gradient(var(--green),transparent);animation:drop 2s infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- ticker ---------- */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0a0d11cc;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--bg),transparent)}
+.track{display:flex;width:max-content;animation:marquee 40s linear infinite}
+.ticker:hover .track{animation-play-state:paused}
+.tick{display:flex;align-items:center;gap:10px;padding:18px 34px;font-family:var(--mono);font-size:13px;color:var(--muted);white-space:nowrap;border-right:1px solid var(--line)}
+.tick b{color:var(--white);font-weight:700}
+.tick .up{color:var(--green)}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- experience ---------- */
+.timeline{position:relative;padding-left:40px}
+.timeline::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--green),var(--line2) 30%,var(--line) 90%,transparent)}
+.job{position:relative;margin-bottom:28px}
+.job::before{content:"";position:absolute;left:-35px;top:30px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--green);box-shadow:0 0 0 4px #3ddc9722}
+.job.past::before{border-color:var(--line2);box-shadow:none}
+.card{position:relative;background:linear-gradient(180deg,var(--panel),#0b0f14);border:1px solid var(--line);border-radius:var(--r);padding:30px;overflow:hidden;transition:border-color .3s,transform .3s}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:radial-gradient(400px circle at var(--cx,50%) var(--cy,50%),#3ddc97aa,transparent 45%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(500px circle at var(--cx,50%) var(--cy,50%),#3ddc970b,transparent 50%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover::before,.card:hover::after{opacity:1}
+.card:hover{transform:translateY(-3px)}
+.job-top{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.co{font-size:24px;font-weight:700;color:var(--white);letter-spacing:-.5px}
+.role{color:var(--green);font-family:var(--mono);font-size:13.5px;margin-top:4px}
+.when{font-family:var(--mono);font-size:12.5px;color:var(--muted);text-align:right}
+.when .now{display:inline-block;margin-left:8px;color:#04130c;background:var(--green);padding:1px 8px;border-radius:4px;font-weight:700}
+.summary{margin-top:14px;color:var(--muted);font-size:15px}
+ul.pts{list-style:none;margin-top:16px;display:grid;gap:10px}
+ul.pts li{position:relative;padding-left:22px;font-size:15px;color:#c3cad2}
+ul.pts li::before{content:"▸";position:absolute;left:0;color:var(--green);font-size:13px;top:1px}
+.metrics{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.metric{border:1px solid var(--line2);background:#0a0d12;border-radius:10px;padding:10px 14px;min-width:120px}
+.metric b{display:block;font-family:var(--mono);font-size:20px;color:var(--white);letter-spacing:-.5px}
+.metric span{font-size:11.5px;color:var(--muted);font-family:var(--mono)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tags span{font-family:var(--mono);font-size:11.5px;color:var(--blue);background:#58a6ff12;border:1px solid #58a6ff2a;padding:4px 10px;border-radius:6px}
+.prog{margin-top:18px;border-left:2px dashed var(--line2);padding-left:18px}
+.prog .step{position:relative;margin-top:14px}
+.prog .step::before{content:"";position:absolute;left:-24px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--line2)}
+.prog .step.cur::before{background:var(--green);box-shadow:0 0 10px var(--green)}
+.prog .step h4{font-family:var(--mono);font-size:13.5px;color:var(--white);font-weight:500}
+.prog .step h4 small{color:var(--muted);font-weight:400;margin-left:8px}
+.ext{display:inline-flex;gap:6px;align-items:center;font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:18px;transition:color .2s}
+.ext:hover{color:var(--green)}
+
+/* ---------- projects ---------- */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.proj{display:flex;flex-direction:column;padding:0}
+.proj.wide{grid-column:span 2}
+.p-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--dim);background:#0a0d12}
+.p-bar .path{color:var(--muted)}
+.p-bar .path b{color:var(--green);font-weight:500}
+.p-body{padding:26px 26px 28px;display:flex;flex-direction:column;flex:1}
+.p-kind{font-family:var(--mono);font-size:12px;color:var(--amber)}
+.p-title{font-size:26px;font-weight:700;color:var(--white);letter-spacing:-.6px;margin-top:6px}
+.p-desc{margin-top:12px;color:var(--muted);font-size:15px}
+.p-links{display:flex;gap:10px;margin-top:auto;padding-top:22px;flex-wrap:wrap}
+.pipe{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:22px;font-family:var(--mono);font-size:12px}
+.pipe .node{padding:8px 12px;border:1px solid var(--line2);border-radius:8px;background:#0a0d12;color:var(--text);position:relative;transition:all .3s}
+.pipe .node small{display:block;color:var(--dim);font-size:10px}
+.pipe .node.on{border-color:var(--green);color:var(--green);box-shadow:0 0 18px #3ddc9740;background:#3ddc970d}
+.pipe .arr{color:var(--dim)}
+.lagviz{margin-top:22px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.lagviz .rail{position:relative;height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.lagviz .rail i{position:absolute;top:0;left:0;height:100%;width:30%;background:linear-gradient(90deg,transparent,var(--green));animation:packet 2.2s linear infinite;border-radius:6px}
+@keyframes packet{from{left:-30%}to{left:100%}}
+
+/* ---------- demo ---------- */
+.browser{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--panel);box-shadow:0 30px 80px #0000007a}
+.b-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.b-bar i{width:11px;height:11px;border-radius:50%;background:var(--line2);display:inline-block}
+.b-url{flex:1;margin-left:12px;font-family:var(--mono);font-size:12px;color:var(--muted);background:#07090c;border:1px solid var(--line);border-radius:6px;padding:6px 12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.b-frame{position:relative;height:620px;background:#07090c}
+.b-frame iframe{width:100%;height:100%;border:0}
+.b-cover{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 40%,#3ddc9714,transparent 60%),#07090c}
+.bars{display:flex;align-items:flex-end;gap:6px;height:140px;margin:0 auto 28px;justify-content:center}
+.bars i{width:14px;background:linear-gradient(var(--green),var(--green2));border-radius:3px 3px 0 0;transition:height .35s}
+.b-cover p{color:var(--muted);font-family:var(--mono);font-size:13px;margin-bottom:18px}
+
+/* ---------- education ---------- */
+.egrid{display:grid;grid-template-columns:1.4fr 1fr;gap:22px}
+.uni{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center}
+.ring{position:relative;width:150px;height:150px}
+.ring svg{transform:rotate(-90deg)}
+.ring .val{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .val b{font-family:var(--mono);font-size:28px;color:var(--white);display:block;line-height:1}
+.ring .val span{font-family:var(--mono);font-size:11px;color:var(--green)}
+.mods{margin-top:18px;display:grid;gap:12px}
+.mod{font-family:var(--mono);font-size:12.5px}
+.mod-top{display:flex;justify-content:space-between;color:var(--text)}
+.mod-top span{color:var(--green)}
+.bar{height:6px;background:var(--line);border-radius:6px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green2),var(--green));border-radius:6px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.grades{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:20px}
+.grade{border:1px solid var(--line2);border-radius:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;background:#0a0d12;font-size:14px}
+.grade b{font-family:var(--mono);font-size:20px;color:var(--green)}
+
+/* ---------- skills ---------- */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.sk h3{font-family:var(--mono);font-size:13px;color:var(--green);font-weight:500;margin-bottom:16px}
+.sk h3::before{content:"$ ";color:var(--dim)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-size:13px;padding:6px 12px;border-radius:7px;border:1px solid var(--line2);background:#0a0d12;color:var(--text);transition:all .2s}
+.chips span:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px)}
+
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:340px 1fr;gap:56px;align-items:center}
+.photo{position:relative;border-radius:var(--r);overflow:hidden;border:1px solid var(--line2);aspect-ratio:1/1;background:var(--panel)}
+.photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.15) contrast(1.05)}
+.photo::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,#00000022 0 2px,transparent 2px 4px);mix-blend-mode:multiply;pointer-events:none}
+.photo .scan{position:absolute;left:0;right:0;height:80px;background:linear-gradient(transparent,#3ddc9733,transparent);animation:scan 4s linear infinite;pointer-events:none}
+@keyframes scan{from{top:-80px}to{top:100%}}
+.photo .lbl{position:absolute;left:12px;bottom:12px;font-family:var(--mono);font-size:11px;color:var(--green);background:#07090ccc;border:1px solid #3ddc9744;padding:4px 8px;border-radius:5px}
+.photo .mono-big{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:80px;font-weight:700;color:var(--green)}
+.whoami{font-family:var(--mono);font-size:13px;color:var(--dim);margin-bottom:14px}
+.about p{color:var(--muted);font-size:16.5px;margin-bottom:16px}
+.about p b{color:var(--text);font-weight:500}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px;font-family:var(--mono);font-size:13px}
+.facts div{color:var(--muted)}
+.facts div span{color:var(--green)}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;padding:140px 0 120px}
+.contact .pre{font-family:var(--mono);color:var(--green);font-size:14px}
+.contact h2{font-size:clamp(40px,7vw,84px);font-weight:800;letter-spacing:-3px;color:var(--white);line-height:1.02;margin-top:14px}
+.contact h2 span{color:var(--green)}
+.contact p{color:var(--muted);max-width:560px;margin:22px auto 0;font-size:17px}
+.mail{margin-top:38px;display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:clamp(14px,2.2vw,22px);color:var(--white);border:1px solid var(--line2);padding:16px 22px;border-radius:12px;background:var(--panel);cursor:pointer;transition:all .2s}
+.mail:hover{border-color:var(--green);box-shadow:0 0 40px #3ddc9726}
+.mail small{font-size:12px;color:var(--green)}
+.contact .cta{justify-content:center}
+footer{border-top:1px solid var(--line);padding:30px 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .hero-grid,.about,.egrid{grid-template-columns:1fr}
+  .term{transform:none}
+  .pgrid{grid-template-columns:1fr}.proj.wide{grid-column:auto}
+  .sgrid{grid-template-columns:1fr 1fr}
+  .about .photo{max-width:320px}
+}
+@media (max-width:720px){
+  .links{display:none;position:absolute;top:60px;left:16px;right:16px;flex-direction:column;align-items:flex-start;gap:16px;background:#0b0e13f2;border:1px solid var(--line);border-radius:12px;padding:20px;backdrop-filter:blur(14px)}
+  .links.open{display:flex}
+  .burger{display:block}
+  .wrap,.nav-in{padding-left:16px;padding-right:16px}
+  section{padding:80px 0}
+  .timeline{padding-left:26px}.timeline::before{left:5px}.job::before{left:-27px}
+  .card{padding:22px}.p-body{padding:22px}
+  .sgrid{grid-template-columns:1fr}
+  .uni{grid-template-columns:1fr}
+  .b-frame{height:460px}
+  .grades,.facts{grid-template-columns:1fr}
+  .when{text-align:left}
+  .scroll-hint{display:none}
+  .term-body{font-size:11px;padding:16px;min-height:0;line-height:1.8}
+  h1{letter-spacing:-2px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div><div class="bg-glow"></div><div class="bg-orb o1"></div><div class="bg-orb o2"></div><div class="noise"></div>
+<div class="progress" id="progress"></div>
+
+<nav id="nav"><div class="nav-in">
+  <a href="#top" class="brand"><span class="dot"></span>matthew_murden</a>
+  <button class="burger" id="burger" aria-label="Menu">menu</button>
+  <div class="links" id="links">
+    <a href="#experience"><span>01.</span>experience</a>
+    <a href="#projects"><span>02.</span>projects</a>
+    <a href="#education"><span>03.</span>education</a>
+    <a href="#about"><span>04.</span>about</a>
+    <a href="#contact"><span>05.</span>contact</a>
+    <a class="btn sm" href="assets/Matthew_Murden_CV.pdf" target="_blank" rel="noopener">cv.pdf ↓</a>
+  </div>
+</div></nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="me rv">
+        <div class="avatar"><img src="assets/me.jpg" alt="Matthew Murden" data-fallback></div>
+        <span class="status"><span class="dot"></span>open to summer 2027 internships</span>
+      </div>
+      <div class="tag rv d1"><span id="typed"></span><span class="cur"></span></div>
+      <h1 class="rv d2">I build systems<br>that trade, test<br>and <span class="g">ship.</span></h1>
+      <p class="lead rv d3">Computer Science at the <b>University of Birmingham</b>, currently an <b>Intern Firmware Engineer at Honeywell</b>. I build trading systems, market-data pipelines, test automation and iOS apps in Python, C++ and Swift.</p>
+      <div class="cta rv d4">
+        <a class="btn primary" href="#projects">view_projects →</a>
+        <a class="btn" href="assets/Matthew_Murden_CV.pdf" target="_blank" rel="noopener">download_cv.pdf</a>
+      </div>
+      <div class="socials rv d4">
+        <a href="https://github.com/matthewmurden" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>github</a>
+        <a href="https://www.linkedin.com/in/matthew-murden-32a935239" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2ZM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2ZM7.1 20.5H3.5V9h3.6v11.5ZM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0Z"/></svg>linkedin</a>
+        <a href="mailto:matthewmurden1@gmail.com"><svg viewBox="0 0 24 24"><path d="M2 5h20v14H2V5Zm2 2v.5l8 5 8-5V7H4Zm16 2.8-8 5-8-5V17h16V9.8Z"/></svg>email</a>
+      </div>
+    </div>
+    <div class="term rv d2" aria-label="Animated terminal">
+      <div class="term-bar"><i></i><i></i><i></i><span>~/btc-seven-pillar-trader</span></div>
+      <div class="term-body" id="term"></div>
+      <div class="term-note">// illustrative run of the seven-pillar pipeline · see projects ↓</div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>scroll</span><i></i></div>
+</header>
+
+<!-- ================= TICKER ================= -->
+<div class="ticker"><div class="track" id="track">
+  <div class="tick"><span class="up">▲</span><b>30min → 10s</b>serial file transfers · honeywell</div>
+  <div class="tick"><span class="up">▲</span><b>39</b>cvss findings audited</div>
+  <div class="tick"><span class="up">▲</span><b>2h</b>critical patch turnaround</div>
+  <div class="tick"><span class="up">▲</span><b>7</b>pillar trading system</div>
+  <div class="tick"><span class="up">▲</span><b>~2.2s</b>polymarket feed→chain lag</div>
+  <div class="tick"><span class="up">▲</span><b>250+</b>orders · £10k+ revenue</div>
+  <div class="tick"><span class="up">▲</span><b>65.7%</b>year 2 · 2:1</div>
+  <div class="tick"><span class="up">▲</span><b>15</b>engineers using my tool fix</div>
+</div></div>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience"><div class="wrap">
+  <div class="sec-head rv"><span class="sec-num">01 //</span><h2 class="sec-title">Experience</h2><span class="sec-line"></span></div>
+  <div class="timeline">
+
+    <div class="job rv"><div class="card">
+      <div class="job-top">
+        <div><div class="co">Honeywell</div><div class="role">Intern Firmware Engineer · Industrial Placement</div></div>
+        <div class="when">Jul 2026 — Jul 2027<span class="now">NOW</span><br>Leicester, UK</div>
+      </div>
+      <p class="summary">Working on a next-generation, safety-critical ESSER fire alarm panel.</p>
+      <ul class="pts">
+        <li>Engineered a Python tool to transfer files to embedded Linux CPUs over serial with base64 encoding and MD5 integrity checks, cutting transfers from 30 minutes to 10 seconds.</li>
+        <li>Driving the team's test automation with hardware-in-the-loop rigs (Arduino relays, photodiodes, machine vision, virtual HMI), turning weeks of manual testing into unattended overnight runs.</li>
+        <li>Diagnosed a failing internal tool and shipped a standalone fix, now used across a 15-engineer team.</li>
+        <li>Wrote and ran 50+ test cases against EN 54 standards, flashing modules with J-Flash and verifying timing-critical behaviour via concurrent CLI logging.</li>
+      </ul>
+      <div class="metrics">
+        <div class="metric"><b><span data-count="180" data-suffix="×">0</span></b><span>faster transfers</span></div>
+        <div class="metric"><b><span data-count="15">0</span></b><span>engineers on my fix</span></div>
+        <div class="metric"><b><span data-count="50" data-suffix="+">0</span></b><span>EN 54 test cases</span></div>
+      </div>
+      <div class="tags"><span>Python</span><span>Embedded Linux</span><span>Serial</span><span>HIL testing</span><span>Arduino</span><span>Machine vision</span><span>J-Flash</span></div>
+    </div></div>
+
+    <div class="job rv"><div class="card">
+      <div class="job-top">
+        <div><div class="co">TM Solicitors</div><div class="role">Web &amp; Cyber Security Lead · Part-time</div></div>
+        <div class="when">Jan 2023 — Present<span class="now">NOW</span></div>
+      </div>
+      <div class="prog">
+        <div class="step cur"><h4>Web &amp; Cyber Security Lead<small>Jun 2024 — Present</small></h4>
+          <ul class="pts">
+            <li>Led an authorised security audit of the firm's WordPress estate, uncovering two forgotten legacy installs and 39 CVSS-rated findings, including 9 vulnerabilities exploitable without login.</li>
+            <li>Patched PHP2Shell (CVSS 9.2) within 2 hours of the fix's release and remediated a CVSS 9.8 plugin admin takeover the same day it was found; both were actively exploited in the wild.</li>
+            <li>Got a scam domain impersonating the firm taken down within 20 hours after the firm's own reports had failed, then hardened email and DNS security (SPF, DKIM, DMARC).</li>
+          </ul>
+        </div>
+        <div class="step"><h4>Digital Solutions Assistant<small>Jan 2023 — Jun 2024</small></h4>
+          <ul class="pts">
+            <li>Built an ads landing page (Figma → Webflow + custom HTML/CSS/JS), configured DNS and optimised SEO, lifting ad conversion by 1.2% and saving roughly £1k a year on ads.</li>
+            <li>Improved Google Ads conversion through data-driven optimisation and produced a video asset now live on the main site.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="metrics">
+        <div class="metric"><b><span data-count="39">0</span></b><span>vulns found</span></div>
+        <div class="metric"><b><span data-count="2">0</span>h</b><span>critical patch</span></div>
+        <div class="metric"><b><span data-count="20">0</span>h</b><span>scam site takedown</span></div>
+        <div class="metric"><b>+1.2%</b><span>ad conversion</span></div>
+      </div>
+      <div class="tags"><span>Security audit</span><span>CVSS</span><span>Incident response</span><span>SPF/DKIM/DMARC</span><span>WordPress</span><span>Webflow</span><span>SEO</span></div>
+    </div></div>
+
+    <div class="job past rv"><div class="card">
+      <div class="job-top">
+        <div><div class="co">Toned Designs Ltd</div><div class="role">Founder &amp; Director</div></div>
+        <div class="when">Jan 2025 — 2026</div>
+      </div>
+      <ul class="pts">
+        <li>Founded and ran a UK streetwear brand with a registered trademark, grown through e-commerce and organic social.</li>
+        <li>Built the store's custom Shopify theme (Liquid, HTML, CSS, JavaScript), improving store conversion by 2%.</li>
+      </ul>
+      <div class="metrics">
+        <div class="metric"><b><span data-count="250" data-suffix="+">0</span></b><span>orders</span></div>
+        <div class="metric"><b>£<span data-count="10">0</span>k+</b><span>revenue</span></div>
+        <div class="metric"><b><span data-count="400" data-suffix="k+">0</span></b><span>views</span></div>
+        <div class="metric"><b><span data-count="5" data-suffix="k+">0</span></b><span>followers</span></div>
+      </div>
+      <div class="tags"><span>Shopify</span><span>Liquid</span><span>JavaScript</span><span>A/B testing</span><span>Growth</span></div>
+    </div></div>
+
+    <div class="job past rv"><div class="card">
+      <div class="job-top">
+        <div><div class="co">iParcelBox</div><div class="role">Technical &amp; Marketing Support</div></div>
+        <div class="when">Mar 2023 — 2025</div>
+      </div>
+      <ul class="pts">
+        <li>Assisted in assembly and testing of IoT smart parcel box hardware.</li>
+        <li>Designed a TikTok growth experiment that reached 270K+ views in one week.</li>
+      </ul>
+      <div class="metrics"><div class="metric"><b><span data-count="270" data-suffix="K+">0</span></b><span>views in 1 week</span></div></div>
+      <div class="tags"><span>IoT hardware</span><span>QA testing</span><span>Growth analytics</span></div>
+    </div></div>
+
+  </div>
+</div></section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects"><div class="wrap">
+  <div class="sec-head rv"><span class="sec-num">02 //</span><h2 class="sec-title">Projects</h2><span class="sec-line"></span></div>
+  <div class="pgrid">
+
+    <article class="card proj wide rv">
+      <div class="p-bar"><span class="path">~/<b>btc-seven-pillar-trader</b></span><span>Python · Nov — Dec 2025</span></div>
+      <div class="p-body">
+        <span class="p-kind">// algorithmic trading system</span>
+        <h3 class="p-title">Seven-Pillar BTC Trader</h3>
+        <p class="p-desc">An automated BTCUSDT perpetual futures system where each job a human trader does is its own pillar. Every minute the decision passes down a production line, and any pillar can veto the trade.</p>
+        <div class="pipe" id="pipe">
+          <div class="node"><small>prep</small>data</div><span class="arr">→</span>
+          <div class="node"><small>p4</small>regime</div><span class="arr">→</span>
+          <div class="node"><small>p1</small>entry</div><span class="arr">→</span>
+          <div class="node"><small>p2</small>exit</div><span class="arr">→</span>
+          <div class="node"><small>p3</small>risk</div><span class="arr">→</span>
+          <div class="node"><small>p6</small>safety</div><span class="arr">→</span>
+          <div class="node"><small>p5</small>execute</div><span class="arr">→</span>
+          <div class="node"><small>p7</small>monitor</div>
+        </div>
+        <ul class="pts">
+          <li>Entry, exit and regime models blend hand-written rules with LightGBM classifiers, so no single input can sink a decision.</li>
+          <li>Validated with walk-forward testing (test months hidden from tuning, fresh state each fold), a look-ahead leak test and fee/slippage stress tests.</li>
+          <li>Runs live on the Binance demo account with limit-first execution, protective take-profit/stop-loss orders and a kill switch; the live loop runs in about 4s per minute.</li>
+        </ul>
+        <div class="tags"><span>Python</span><span>LightGBM</span><span>scikit-learn</span><span>pandas</span><span>polars</span><span>DuckDB</span><span>Binance API</span></div>
+        <div class="p-links"><a class="btn sm" href="https://github.com/matthewmurden/btc-seven-pillar-trader" target="_blank" rel="noopener">source ↗</a></div>
+      </div>
+    </article>
+
+    <article class="card proj rv">
+      <div class="p-bar"><span class="path">~/<b>polymarket-insider-detection</b></span><span>C++ · 2026 — now</span></div>
+      <div class="p-body">
+        <span class="p-kind">// market surveillance research</span>
+        <h3 class="p-title">Polymarket Insider Detection</h3>
+        <p class="p-desc">Real-time detection of suspicious trading on prediction markets. Streams live trades over WebSocket, links each one to its on-chain transaction and wallet on Polygon, and scores wallets for anomalous behaviour.</p>
+        <div class="lagviz"><span>feed</span><div class="rail"><i></i></div><span>chain <b class="t-g">~2.2s</b></span></div>
+        <ul class="pts">
+          <li>Python anomaly scorer combines per-wallet signals into one risk score, validated against known insider cases.</li>
+          <li>Flags clean control wallets at a lower rate than confirmed insiders.</li>
+        </ul>
+        <div class="tags"><span>C++</span><span>WebSocket</span><span>Polygon</span><span>Python</span><span>Anomaly detection</span></div>
+        <div class="p-links"><a class="btn sm" href="https://github.com/matthewmurden/polymarket-insider-detection" target="_blank" rel="noopener">source ↗</a></div>
+      </div>
+    </article>
+
+    <article class="card proj rv d1">
+      <div class="p-bar"><span class="path">~/<b>resell-profit-ios</b></span><span>Swift · 2025</span></div>
+      <div class="p-body">
+        <span class="p-kind">// ios app</span>
+        <h3 class="p-title">Resell Profit</h3>
+        <p class="p-desc">A SwiftUI app for resellers: track purchases and sales, see live profit totals, analyse monthly profit and time-to-sell with Swift Charts, and export everything to CSV.</p>
+        <ul class="pts">
+          <li>Offline-first storage with Core Data, including schema migrations.</li>
+          <li>Firebase Authentication for sign-in.</li>
+        </ul>
+        <div class="tags"><span>SwiftUI</span><span>Core Data</span><span>Swift Charts</span><span>Firebase Auth</span></div>
+        <div class="p-links"><a class="btn sm" href="https://github.com/matthewmurden/resell-profit-ios" target="_blank" rel="noopener">source ↗</a></div>
+      </div>
+    </article>
+
+    <article class="card proj wide rv">
+      <div class="p-bar"><span class="path">~/<b>sorting-visualiser</b></span><span>TypeScript · 2025</span></div>
+      <div class="p-body">
+        <span class="p-kind">// interactive web app · live below ↓</span>
+        <h3 class="p-title">Sorting Algorithm Visualiser</h3>
+        <p class="p-desc">React, TypeScript and Canvas. Algorithms run as step-emitting generators, so you can play, pause and step through them one comparison at a time. Deployed to GitHub Pages with GitHub Actions.</p>
+        <div class="tags"><span>React</span><span>TypeScript</span><span>Canvas</span><span>Vite</span><span>GitHub Actions</span></div>
+        <div class="p-links"><a class="btn sm primary" href="https://matthewmurden.github.io/sorting-visualiser/" target="_blank" rel="noopener">live demo ↗</a><a class="btn sm" href="https://github.com/matthewmurden/sorting-visualiser" target="_blank" rel="noopener">source ↗</a></div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="browser rv" style="margin-top:34px">
+    <div class="b-bar"><i></i><i></i><i></i><div class="b-url">matthewmurden.github.io/sorting-visualiser</div><a class="btn sm" href="https://matthewmurden.github.io/sorting-visualiser/" target="_blank" rel="noopener">open ↗</a></div>
+    <div class="b-frame" id="demo">
+      <div class="b-cover" id="demoCover"><div><div class="bars" id="bars"></div><p>// interactive demo · runs in your browser</p><button class="btn primary" id="loadDemo">▶ run_live_demo</button></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education"><div class="wrap">
+  <div class="sec-head rv"><span class="sec-num">03 //</span><h2 class="sec-title">Education</h2><span class="sec-line"></span></div>
+  <div class="egrid">
+    <div class="card rv">
+      <div class="uni">
+        <div class="ring">
+          <svg width="150" height="150"><circle cx="75" cy="75" r="64" fill="none" stroke="#1c242e" stroke-width="10"/><circle id="ringArc" cx="75" cy="75" r="64" fill="none" stroke="url(#rg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="402" style="transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)"/><defs><linearGradient id="rg"><stop offset="0" stop-color="#2bb07a"/><stop offset="1" stop-color="#3ddc97"/></linearGradient></defs></svg>
+          <div class="val"><div><b>65.7%</b><span>year 2 · 2:1</span></div></div>
+        </div>
+        <div>
+          <div class="co">University of Birmingham</div>
+          <div class="role">BSc Computer Science with Year in Industry</div>
+          <div class="when" style="text-align:left;margin-top:6px">Sep 2024 — Jun 2028</div>
+          <div class="mods">
+            <div class="mod"><div class="mod-top">Software Engineering<span>78%</span></div><div class="bar"><i data-w="78"></i></div></div>
+            <div class="mod"><div class="mod-top">Functional Programming<span>78%</span></div><div class="bar"><i data-w="78"></i></div></div>
+            <div class="mod"><div class="mod-top">Security &amp; Networks<span>73%</span></div><div class="bar"><i data-w="73"></i></div></div>
+            <div class="mod"><div class="mod-top">Computer Systems &amp; Professional Practice<span>73%</span></div><div class="bar"><i data-w="73"></i></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card rv d1">
+      <div class="co">Hymers College</div>
+      <div class="role">A-Levels · Hull · 2024</div>
+      <div class="grades">
+        <div class="grade">Mathematics<b>A</b></div>
+        <div class="grade">Physics<b>A</b></div>
+        <div class="grade">Economics<b>B</b></div>
+        <div class="grade">Financial Studies (AS)<b>A</b></div>
+      </div>
+      <p class="summary" style="margin-top:18px">Captained the college 1st XI hockey team.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" style="padding-top:20px"><div class="wrap">
+  <div class="sgrid">
+    <div class="card sk rv"><h3>languages</h3><div class="chips"><span>Python</span><span>C++</span><span>Java</span><span>Swift</span><span>TypeScript</span><span>JavaScript</span><span>SQL</span></div></div>
+    <div class="card sk rv d1"><h3>data_and_ml</h3><div class="chips"><span>pandas</span><span>polars</span><span>NumPy</span><span>DuckDB</span><span>LightGBM</span><span>scikit-learn</span><span>Walk-forward validation</span><span>Anomaly detection</span></div></div>
+    <div class="card sk rv d2"><h3>systems</h3><div class="chips"><span>Linux</span><span>Embedded Linux</span><span>Git</span><span>WebSockets</span><span>REST APIs</span><span>Serial comms</span><span>GitHub Actions</span></div></div>
+    <div class="card sk rv"><h3>testing</h3><div class="chips"><span>Test automation</span><span>Hardware-in-the-loop</span><span>EN 54</span><span>Machine vision</span><span>Internal tooling</span></div></div>
+    <div class="card sk rv d1"><h3>security</h3><div class="chips"><span>Vulnerability assessment</span><span>CVSS</span><span>Patch management</span><span>Incident response</span><span>SPF · DKIM · DMARC</span></div></div>
+    <div class="card sk rv d2"><h3>web_and_ios</h3><div class="chips"><span>React</span><span>SwiftUI</span><span>Core Data</span><span>Firebase</span><span>Shopify Liquid</span><span>Webflow</span><span>Figma</span></div></div>
+  </div>
+</div></section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about"><div class="wrap">
+  <div class="sec-head rv"><span class="sec-num">04 //</span><h2 class="sec-title">About</h2><span class="sec-line"></span></div>
+  <div class="about">
+    <div class="photo rv"><img src="assets/me.jpg" alt="Photo of Matthew Murden" data-fallback data-big><div class="scan"></div><span class="lbl">● matthew.jpg</span></div>
+    <div class="rv d1">
+      <div class="whoami">$ whoami</div>
+      <p>I'm Matt, a Computer Science student at the University of Birmingham, spending my placement year as an <b>Intern Firmware Engineer at Honeywell</b>, where I build tooling and test automation for safety-critical fire alarm hardware.</p>
+      <p>Outside work I'm drawn to <b>markets</b>: I've built a seven-pillar crypto trading system with walk-forward validation, and a real-time pipeline that hunts for insider trading on Polymarket. I also run security for a law firm and founded a streetwear brand from scratch, so I like taking an idea all the way to something real.</p>
+      <p>I'm looking for <b>Summer 2027 internships</b> in software engineering, quant and trading technology.</p>
+      <div class="facts">
+        <div><span>loc</span> = Leicester / Birmingham, UK</div>
+        <div><span>stack</span> = Python · C++ · Swift</div>
+        <div><span>into</span> = trading · market data</div>
+        <div><span>sport</span> = hockey (ex-captain)</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contact"><div class="wrap">
+  <div class="pre rv">05 // contact</div>
+  <h2 class="rv d1">Let's build<br>something <span>fast.</span></h2>
+  <p class="rv d2">Open to Summer 2027 internships in software engineering, quant and trading technology. The quickest way to reach me is email.</p>
+  <div class="rv d3"><button class="mail" id="mail" data-email="matthewmurden1@gmail.com">matthewmurden1@gmail.com <small id="mailNote">[click to copy]</small></button></div>
+  <div class="cta rv d4" style="margin-top:26px">
+    <a class="btn" href="https://www.linkedin.com/in/matthew-murden-32a935239" target="_blank" rel="noopener">linkedin ↗</a>
+    <a class="btn" href="https://github.com/matthewmurden" target="_blank" rel="noopener">github ↗</a>
+    <a class="btn primary" href="assets/Matthew_Murden_CV.pdf" target="_blank" rel="noopener">download_cv.pdf ↓</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap"><span>© <span id="yr">2026</span> Matthew Murden</span><span>built from scratch · hosted on github pages</span></div></footer>
+
+<script>
+(()=>{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const CDN='https://cdn.prod.website-files.com/68c7f49a6d62f8336f1f661e/68c9cbb6c788f43921605bfa_Photoroom_20250420_192214.jpg';
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* photo fallback: local file -> old CDN -> monogram */
+document.querySelectorAll('img[data-fallback]').forEach(img=>{
+  img.addEventListener('error',function h(){
+    if(!img.dataset.tried){img.dataset.tried=1;img.src=CDN;return}
+    img.removeEventListener('error',h);
+    swap(img);
+  });
+  setTimeout(()=>{if(img.isConnected&&!(img.complete&&img.naturalWidth))swap(img)},6000);
+});
+function swap(img){if(!img.isConnected)return;const m=document.createElement('div');m.className=img.hasAttribute('data-big')?'mono-big':'mono';m.textContent='MM';img.replaceWith(m)}
+
+/* nav, progress, cursor glow */
+const nav=document.getElementById('nav'),prog=document.getElementById('progress');
+const onScroll=()=>{const h=document.documentElement;nav.classList.toggle('scrolled',h.scrollTop>20);prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'};
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+addEventListener('pointermove',e=>{document.documentElement.style.setProperty('--mx',e.clientX+'px');document.documentElement.style.setProperty('--my',e.clientY+'px')},{passive:true});
+document.getElementById('burger').onclick=()=>document.getElementById('links').classList.toggle('open');
+document.querySelectorAll('#links a').forEach(a=>a.onclick=()=>document.getElementById('links').classList.remove('open'));
+
+/* card spotlight */
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--cx',(e.clientX-r.left)+'px');c.style.setProperty('--cy',(e.clientY-r.top)+'px')}));
+
+/* typed tagline */
+const phrases=['// cs @ university of birmingham','// firmware engineer @ honeywell','// building trading systems','// hunting insider trades on-chain','// open to summer 2027 internships'];
+const typed=document.getElementById('typed');
+if(reduce){typed.textContent=phrases[0]}else{
+  let p=0,i=0,del=false;
+  (function tick(){const s=phrases[p];typed.textContent=s.slice(0,i);
+    if(!del&&i<s.length){i++;setTimeout(tick,45)}
+    else if(!del){del=true;setTimeout(tick,1800)}
+    else if(i>0){i--;setTimeout(tick,22)}
+    else{del=false;p=(p+1)%phrases.length;setTimeout(tick,300)}})();
+}
+
+/* terminal */
+const lines=[
+ ['<span class="t-g">$</span> <span class="t-w">python RUN_LAYER/src/live_runner.py --demo</span>',600],
+ ['<span class="t-b">[pre-p4]</span>  candles · delta · htf merged <span class="t-g">✓</span>',380],
+ ['<span class="t-b">[regime]</span>  classifying market state …',420],
+ ['<span class="t-b">[entry]</span>   rules ⊕ lightgbm → calibrated prob',420],
+ ['<span class="t-b">[exit]</span>    take-profit / stop-loss levels set',380],
+ ['<span class="t-b">[risk]</span>    size capped · leverage limited',380],
+ ['<span class="t-p">[safety]</span>  veto check <span class="t-g">✓ clear</span>',420],
+ ['<span class="t-y">[exec]</span>    limit-first order → binance demo',420],
+ ['<span class="t-b">[monitor]</span> ledger updated · next candle in 60s',900],
+];
+const term=document.getElementById('term');
+function runTerm(){term.innerHTML='';let k=0;
+  (function next(){if(k<lines.length){const d=document.createElement('div');d.innerHTML=lines[k][0];term.appendChild(d);setTimeout(next,reduce?0:lines[k][1]);k++}
+   else{const c=document.createElement('div');c.innerHTML='<span class="t-g">$</span> <span class="caret"></span>';term.appendChild(c);if(!reduce)setTimeout(runTerm,4200)}})();}
+runTerm();
+
+/* ticker duplicate for seamless loop */
+const tr=document.getElementById('track');tr.innerHTML+=tr.innerHTML;
+
+/* reveal + counters + bars + ring */
+const count=el=>{const end=+el.dataset.count,suf=el.dataset.suffix||'';if(reduce){el.textContent=end+suf;return}
+  const t0=performance.now(),dur=1400;(function f(t){const p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);el.textContent=Math.round(end*e)+suf;if(p<1)requestAnimationFrame(f)})(t0)};
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;const el=en.target;el.classList.add('in');
+  el.querySelectorAll('[data-count]').forEach(count);
+  el.querySelectorAll('.bar i').forEach(b=>b.style.width=b.dataset.w+'%');
+  const arc=el.querySelector('#ringArc');if(arc)arc.style.strokeDashoffset=402*(1-.657);
+  io.unobserve(el)}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* pipeline animation */
+const nodes=[...document.querySelectorAll('#pipe .node')];let ni=0;
+if(!reduce)setInterval(()=>{nodes.forEach(n=>n.classList.remove('on'));nodes[ni%nodes.length].classList.add('on');ni++},650);
+
+/* demo cover bars */
+const bars=document.getElementById('bars');const N=18;const hs=[];
+for(let i=0;i<N;i++){const b=document.createElement('i');hs.push(20+Math.random()*120);b.style.height=hs[i]+'px';bars.appendChild(b)}
+let bi=0,bj=0;const bEls=[...bars.children];
+const bubble=setInterval(()=>{if(reduce)return;if(hs[bj]>hs[bj+1]){[hs[bj],hs[bj+1]]=[hs[bj+1],hs[bj]];bEls[bj].style.height=hs[bj]+'px';bEls[bj+1].style.height=hs[bj+1]+'px'}
+  bEls.forEach(e=>e.style.opacity=.55);bEls[bj].style.opacity=1;bEls[bj+1].style.opacity=1;
+  bj++;if(bj>=N-1-bi){bj=0;bi++;if(bi>=N-1){bi=0;for(let i=0;i<N;i++){hs[i]=20+Math.random()*120;bEls[i].style.height=hs[i]+'px'}}}},120);
+document.getElementById('loadDemo').onclick=()=>{clearInterval(bubble);const f=document.createElement('iframe');f.src='https://matthewmurden.github.io/sorting-visualiser/';f.title='Sorting visualiser live demo';f.loading='lazy';document.getElementById('demo').appendChild(f);document.getElementById('demoCover').remove()};
+
+/* copy email */
+const mail=document.getElementById('mail'),note=document.getElementById('mailNote');
+mail.onclick=async()=>{try{await navigator.clipboard.writeText(mail.dataset.email);note.textContent='[copied ✓]'}catch(e){location.href='mailto:'+mail.dataset.email}setTimeout(()=>note.textContent='[click to copy]',2200)};
+})();
+</script>
+</body>
+</html>
